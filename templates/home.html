@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CampusQ | Home</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-600">CampusQ</h1>
+    <span class="text-gray-500 text-sm">
+      Campus Digital Queue System
+    </span>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="max-w-4xl mx-auto p-8">
+
+    <h2 class="text-3xl font-bold text-center mb-10">
+      Welcome to CampusQ
+    </h2>
+
+    <!-- BUTTON GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- LOGIN -->
+      <a href="/login/"
+         class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold mb-2">Student Login</h3>
+        <p class="text-gray-500">Sign in using Google</p>
+      </a>
+
+      <!-- SERVICES -->
+      <a href="/services/"
+         class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold mb-2">Student Services</h3>
+        <p class="text-gray-500">Take tokens & view queues</p>
+      </a>
+
+      <!-- STAFF DASHBOARD -->
+      <a href="/staff/"
+         class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold mb-2">Staff Dashboard</h3>
+        <p class="text-gray-500">Call & manage queue</p>
+      </a>
+
+      <!-- ADMIN -->
+      <a href="/admin/"
+         class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold mb-2">Admin Panel</h3>
+        <p class="text-gray-500">Manage services & users</p>
+      </a>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

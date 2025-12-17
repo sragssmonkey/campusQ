@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Staff Dashboard</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-600">CampusQ · Staff</h1>
+    <button
+      onclick="logout()"
+      class="text-red-500 font-medium hover:underline"
+    >
+      Logout
+    </button>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="max-w-4xl mx-auto p-6">
+
+    <h2 class="text-2xl font-bold mb-6">Queue Control Panel</h2>
+
+    <!-- SERVICE SELECT -->
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+      <label class="block text-sm font-medium mb-2">Select Service</label>
+      <select
+        id="serviceSelect"
+        class="w-full border rounded-lg p-2"
+      >
+        <option value="1">Admin Office</option>
+        <option value="2">Library Helpdesk</option>
+        <option value="3">Canteen Counter</option>
+      </select>
+    </div>
+
+    <!-- QUEUE STATUS -->
+    <div class="bg-white p-6 rounded-xl shadow mb-6">
+      <h3 class="text-xl font-semibold mb-2">Current Queue Status</h3>
+
+      <div class="flex justify-between mt-4">
+        <div>
+          <p class="text-gray-500">Currently Serving</p>
+          <p id="currentToken" class="text-3xl font-bold">—</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500">Waiting</p>
+          <p id="waitingCount" class="text-3xl font-bold">—</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="bg-white p-6 rounded-xl shadow flex gap-4">
+      <button
+        onclick="callNext()"
+        class="flex-1 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
+      >
+        ▶ Call Next
+      </button>
+
+      <button
+        onclick="markServed()"
+        class="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+      >
+        ✔ Mark Served
+      </button>
+    </div>
+
+  </div>
+
+  <!-- JS -->
+  <script src="{% static 'js/staff.js' %}"></script>
+
+  <!-- AUTH CHECK -->
+  <script>
+    function logout() {
+      localStorage.removeItem("firebaseToken");
+      window.location.href = "/login/";
+    }
+
+    if (!localStorage.getItem("firebaseToken")) {
+      window.location.href = "/login/";
+    }
+  </script>
+
+</body>
+</html>

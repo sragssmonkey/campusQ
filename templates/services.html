@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Services</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDKs (needed for FCM foreground) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-600">CampusQ</h1>
+    <button
+      onclick="logout()"
+      class="text-red-500 font-medium hover:underline"
+    >
+      Logout
+    </button>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <div class="max-w-5xl mx-auto p-6">
+
+    <h2 class="text-2xl font-bold mb-6">Available Services</h2>
+
+    <!-- SERVICES GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- SERVICE CARD -->
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-xl font-semibold">Admin Office</h3>
+        <p class="text-gray-500 mt-1">Document verification & queries</p>
+
+        <div class="flex items-center justify-between mt-4">
+          <span class="text-sm text-gray-600">
+            Avg wait: ~10 mins
+          </span>
+
+          <button
+            onclick="takeToken(1)"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Take Token
+          </button>
+        </div>
+      </div>
+
+      <!-- SERVICE CARD -->
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-xl font-semibold">Library Helpdesk</h3>
+        <p class="text-gray-500 mt-1">Book issues & account support</p>
+
+        <div class="flex items-center justify-between mt-4">
+          <span class="text-sm text-gray-600">
+            Avg wait: ~5 mins
+          </span>
+
+          <button
+            onclick="takeToken(2)"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Take Token
+          </button>
+        </div>
+      </div>
+
+      <!-- SERVICE CARD -->
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-xl font-semibold">Canteen Counter</h3>
+        <p class="text-gray-500 mt-1">Food billing & orders</p>
+
+        <div class="flex items-center justify-between mt-4">
+          <span class="text-sm text-gray-600">
+            Avg wait: ~3 mins
+          </span>
+
+          <button
+            onclick="takeToken(3)"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Take Token
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- JS FILES -->
+  <script src="{% static 'js/services.js' %}"></script>
+  <script src="{% static 'js/fcm.js' %}"></script>
+
+  <!-- LOGOUT SCRIPT -->
+  <script>
+    function logout() {
+      localStorage.removeItem("firebaseToken");
+      window.location.href = "/login/";
+    }
+
+    // Safety check
+    if (!localStorage.getItem("firebaseToken")) {
+      window.location.href = "/login/";
+    }
+  </script>
+
+</body>
+</html>
