@@ -7,37 +7,28 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
-// Ensure session persists
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-// 🔥 POPUP LOGIN (FINAL)
 function googleLogin() {
   console.log("Popup login started");
 
-  firebase.auth()
-    .signInWithPopup(provider)
-    .then(async (result) => {
-      console.log("Popup login success", result.user);
-
-      const token = await result.user.getIdToken();
-      localStorage.setItem("firebaseToken", token);
-
-      window.location.href = "/services/";
-    })
-    .catch((error) => {
-      console.error("Popup auth error:", error.code, error.message);
-      alert(error.code + ": " + error.message);
-    });
+  firebase.auth().signInWithPopup(provider).catch((error) => {
+    console.warn("Popup closed or ignored:", error.code);
+    // DO NOT redirect here
+  });
 }
 
-// Safety net
+// 🔥 THIS is what actually redirects the user
 firebase.auth().onAuthStateChanged(async (user) => {
-  if (user && !localStorage.getItem("firebaseToken")) {
+  console.log("Auth state changed:", user);
+
+  if (user) {
     const token = await user.getIdToken();
     localStorage.setItem("firebaseToken", token);
+
+    console.log("Redirecting to /services/");
     window.location.href = "/services/";
   }
 });
