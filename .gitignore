@@ -1,3 +1,4 @@
 # Firebase service account
 *.json
 campusq-d771f-firebase-adminsdk-*.json
+staticfiles/
