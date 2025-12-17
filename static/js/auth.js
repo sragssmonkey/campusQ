@@ -1,4 +1,4 @@
-console.log("auth.js loaded");
+console.log("auth.js loaded — REDIRECT MODE");
 
 const firebaseConfig = {
   apiKey: "AIzaSyBiBlHXINpLRAFYVPG0sULnh6EQXiw9ktk",
@@ -11,32 +11,30 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-// 🔹 START LOGIN
 function googleLogin() {
   console.log("Redirect login started");
   firebase.auth().signInWithRedirect(provider);
 }
 
-// 🔹 HANDLE REDIRECT RESULT
+// Handle redirect return
 firebase.auth().getRedirectResult()
   .then(async (result) => {
     if (result.user) {
       const token = await result.user.getIdToken();
       localStorage.setItem("firebaseToken", token);
-      console.log("Redirect login success, redirecting to services");
+      console.log("Redirect success → services");
       window.location.href = "/services/";
     }
   })
   .catch((error) => {
-    console.error("Redirect auth error:", error.code);
+    console.error("Redirect error:", error.code);
   });
 
-// 🔹 SAFETY NET (fires on page reload)
+// Safety net
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user && !localStorage.getItem("firebaseToken")) {
     const token = await user.getIdToken();
     localStorage.setItem("firebaseToken", token);
-    console.log("Auth state detected, redirecting");
     window.location.href = "/services/";
   }
 });
