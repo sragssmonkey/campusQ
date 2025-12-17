@@ -1,4 +1,4 @@
-console.log("auth.js loaded — REDIRECT MODE");
+console.log("AUTH.JS VERSION = REDIRECT v2 🔥");
 
 const firebaseConfig = {
   apiKey: "AIzaSyBiBlHXINpLRAFYVPG0sULnh6EQXiw9ktk",
@@ -16,21 +16,18 @@ function googleLogin() {
   firebase.auth().signInWithRedirect(provider);
 }
 
-// Handle redirect return
 firebase.auth().getRedirectResult()
   .then(async (result) => {
     if (result.user) {
       const token = await result.user.getIdToken();
       localStorage.setItem("firebaseToken", token);
-      console.log("Redirect success → services");
       window.location.href = "/services/";
     }
   })
-  .catch((error) => {
-    console.error("Redirect error:", error.code);
+  .catch((err) => {
+    console.error("Redirect error:", err.code);
   });
 
-// Safety net
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user && !localStorage.getItem("firebaseToken")) {
     const token = await user.getIdToken();
