@@ -11,24 +11,32 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
+// 🔹 START LOGIN
 function googleLogin() {
-  console.log("Popup login started");
-
-  firebase.auth().signInWithPopup(provider).catch((error) => {
-    console.warn("Popup closed or ignored:", error.code);
-    // DO NOT redirect here
-  });
+  console.log("Redirect login started");
+  firebase.auth().signInWithRedirect(provider);
 }
 
-// 🔥 THIS is what actually redirects the user
-firebase.auth().onAuthStateChanged(async (user) => {
-  console.log("Auth state changed:", user);
+// 🔹 HANDLE REDIRECT RESULT
+firebase.auth().getRedirectResult()
+  .then(async (result) => {
+    if (result.user) {
+      const token = await result.user.getIdToken();
+      localStorage.setItem("firebaseToken", token);
+      console.log("Redirect login success, redirecting to services");
+      window.location.href = "/services/";
+    }
+  })
+  .catch((error) => {
+    console.error("Redirect auth error:", error.code);
+  });
 
-  if (user) {
+// 🔹 SAFETY NET (fires on page reload)
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (user && !localStorage.getItem("firebaseToken")) {
     const token = await user.getIdToken();
     localStorage.setItem("firebaseToken", token);
-
-    console.log("Redirecting to /services/");
+    console.log("Auth state detected, redirecting");
     window.location.href = "/services/";
   }
 });
