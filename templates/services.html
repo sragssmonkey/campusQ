@@ -107,9 +107,16 @@
     }
 
     // Safety check
-    if (!localStorage.getItem("firebaseToken")) {
-      window.location.href = "/login/";
-    }
+    
+    setTimeout(() => {
+      if (!localStorage.getItem("firebaseToken")) {
+        console.log("No token found, redirecting to login");
+        window.location.href = "/login/";
+      } else {
+        console.log("Token found, staying on services");
+      }
+    }, 800); // critical delay
+
   </script>
 
 </body>
